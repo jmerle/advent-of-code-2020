@@ -14,21 +14,13 @@ class DayTests {
         Reflection.getAllDayClasses().forEach {
             val day = it.createDay()
 
-            if (shouldCreateTest(day, 1)) {
-                yield(createTest(day, 1))
-            }
+            for (part in 1..2) {
+                val answer = day.getAnswer(part) ?: continue
 
-            if (shouldCreateTest(day, 2)) {
-                yield(createTest(day, 2))
+                yield(DynamicTest.dynamicTest("Day ${day.number} Part $part") {
+                    Assertions.assertEquals(answer, day.solve(part))
+                })
             }
         }
     }.asStream()
-
-    private fun shouldCreateTest(day: Day, part: Int): Boolean =
-        day.getAnswer(part) != null
-
-    private fun createTest(day: Day, part: Int): DynamicTest =
-        DynamicTest.dynamicTest("Day ${day.number} Part $part") {
-            Assertions.assertEquals(day.getAnswer(part), day.solve(part))
-        }
 }
