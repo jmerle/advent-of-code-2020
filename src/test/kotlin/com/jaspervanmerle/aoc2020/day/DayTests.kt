@@ -10,18 +10,17 @@ import kotlin.streams.asStream
 class DayTests {
     @TestFactory
     fun generateDayTests(): Stream<DynamicTest> = sequence {
-        Reflection.dayClasses
-            .forEach {
-                val day = it.getConstructor().newInstance()
+        Reflection.dayClasses.forEach {
+            val day = it.getConstructor().newInstance()
 
-                if (day.answerPartOne != null) {
-                    yield(createTest(day, 1, day.answerPartOne) { day.solvePartOne() })
-                }
-
-                if (day.answerPartTwo != null) {
-                    yield(createTest(day, 2, day.answerPartTwo) { day.solvePartTwo() })
-                }
+            if (day.answerPartOne != null) {
+                yield(createTest(day, 1, day.answerPartOne) { day.solvePartOne() })
             }
+
+            if (day.answerPartTwo != null) {
+                yield(createTest(day, 2, day.answerPartTwo) { day.solvePartTwo() })
+            }
+        }
     }.asStream()
 
     private fun createTest(day: Day, partNumber: Int, answer: Any?, solver: () -> Any): DynamicTest =
