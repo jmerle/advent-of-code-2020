@@ -4,17 +4,12 @@ import com.jaspervanmerle.aoc2020.day.Day
 
 object Runner {
     fun runDay(dayNumber: Int) {
-        val dayPackage = Day::class.java.`package`.name
-        val clsName = "Day${dayNumber.toString().padStart(2, '0')}"
-        val dayCls = Class.forName("$dayPackage.$clsName")
-
-        run(dayCls.getConstructor().newInstance() as Day)
+        val className = "Day${dayNumber.toString().padStart(2, '0')}"
+        run(dayClasses.first { it.simpleName == className }.newInstance())
     }
 
     fun runLatestDay() {
-        val dayCls = Reflection.dayClasses.maxByOrNull { it.simpleName }!!
-
-        run(dayCls.getConstructor().newInstance())
+        run(dayClasses.maxByOrNull { it.simpleName }!!.newInstance())
     }
 
     private fun run(day: Day) {

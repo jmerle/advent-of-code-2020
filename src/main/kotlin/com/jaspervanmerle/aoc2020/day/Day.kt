@@ -8,7 +8,7 @@ abstract class Day(val number: Int, val answerPartOne: Any? = null, val answerPa
         return readResource("input-${number.toString().padStart(2, '0')}.txt")
     }
 
-    protected fun readResource(name: String): String {
+    private fun readResource(name: String): String {
         return this::class.java
             .getResourceAsStream("/$name")
             .bufferedReader()
