@@ -1,16 +1,26 @@
 package com.jaspervanmerle.aoc2020.day
 
-abstract class Day(val number: Int, val answerPartOne: Any? = null, val answerPartTwo: Any? = null) {
-    abstract fun solvePartOne(): Any
-    abstract fun solvePartTwo(): Any
+abstract class Day(private val answerPartOne: Any? = null, private val answerPartTwo: Any? = null) {
+    val number = javaClass.simpleName.replace("Day", "").toInt()
 
-    protected fun getInput(): String {
-        return readResource("input-${number.toString().padStart(2, '0')}.txt")
+    fun solve(part: Int): Any = when (part) {
+        1 -> solvePartOne()
+        2 -> solvePartTwo()
+        else -> throw Error("Invalid part $part")
     }
 
-    private fun readResource(name: String): String {
+    fun getAnswer(part: Int): Any? = when (part) {
+        1 -> answerPartOne
+        2 -> answerPartTwo
+        else -> throw Error("Invalid part $part")
+    }
+
+    protected abstract fun solvePartOne(): Any
+    protected abstract fun solvePartTwo(): Any
+
+    protected fun getInput(): String {
         return this::class.java
-            .getResourceAsStream("/$name")
+            .getResourceAsStream("/input-${number.toString().padStart(2, '0')}.txt")
             .bufferedReader()
             .use { it.readText() }
             .trim()

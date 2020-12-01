@@ -3,29 +3,28 @@ package com.jaspervanmerle.aoc2020
 import com.jaspervanmerle.aoc2020.day.Day
 
 object Runner {
-    fun runDay(dayNumber: Int) {
-        val className = "Day${dayNumber.toString().padStart(2, '0')}"
-        run(dayClasses.first { it.simpleName == className }.newInstance())
+    fun runSingleDay(dayNumber: Int) {
+        run(Reflection.getDayClass(dayNumber).createDay())
     }
 
     fun runLatestDay() {
-        run(dayClasses.maxByOrNull { it.simpleName }!!.newInstance())
+        run(Reflection.getAllDayClasses().maxByOrNull { it.simpleName }!!.createDay())
     }
 
     private fun run(day: Day) {
         println("Running day ${day.number}")
-
-        runPart(1, day.answerPartOne) { day.solvePartOne() }
-        runPart(2, day.answerPartTwo) { day.solvePartTwo() }
+        runPart(day, 1)
+        runPart(day, 2)
     }
 
-    private fun runPart(number: Int, answer: Any?, solver: () -> Any) {
+    private fun runPart(day: Day, part: Int) {
         val result = try {
-            solver()
+            day.solve(part)
         } catch (err: NotImplementedError) {
             "TODO"
         }
 
+        val answer = day.getAnswer(part)
         val status = if (answer != null) {
             if (result == answer) {
                 "correct"
@@ -37,13 +36,13 @@ object Runner {
         }
 
         val resultWithStatus = if (status != null) "$result ($status)" else "$result"
-        println("Part $number: $resultWithStatus")
+        println("Part $part: $resultWithStatus")
     }
 }
 
 fun main(args: Array<String>) {
     if (args.isNotEmpty()) {
-        Runner.runDay(args[0].toInt())
+        Runner.runSingleDay(args[0].toInt())
     } else {
         Runner.runLatestDay()
     }

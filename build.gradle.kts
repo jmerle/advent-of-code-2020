@@ -22,7 +22,7 @@ dependencies {
 }
 
 application {
-    mainClassName = "$group.RunnerKt"
+    mainClass.set("$group.RunnerKt")
 }
 
 tasks {
