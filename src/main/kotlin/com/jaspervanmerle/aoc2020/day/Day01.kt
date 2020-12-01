@@ -1,6 +1,6 @@
 package com.jaspervanmerle.aoc2020.day
 
-class Day01 : Day(1) {
+class Day01 : Day(1, 436404, 274879808) {
     private val input = getInput()
         .lines()
         .map { it.toInt() }

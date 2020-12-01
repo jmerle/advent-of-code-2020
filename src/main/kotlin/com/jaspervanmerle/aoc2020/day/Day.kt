@@ -1,6 +1,6 @@
 package com.jaspervanmerle.aoc2020.day
 
-abstract class Day(val number: Int) {
+abstract class Day(val number: Int, val answerPartOne: Any? = null, val answerPartTwo: Any? = null) {
     abstract fun solvePartOne(): Any
     abstract fun solvePartTwo(): Any
 

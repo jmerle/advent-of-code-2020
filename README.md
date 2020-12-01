@@ -10,4 +10,7 @@ This repository contains my [Advent of Code 2020](https://adventofcode.com/) sol
 
 # Run a specific day
 ./gradlew run --args 1
+
+# Run all days
+./gradlew test
 ```
