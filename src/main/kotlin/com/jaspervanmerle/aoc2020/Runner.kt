@@ -33,15 +33,16 @@ object Runner {
 
         val status = if (answer != null) {
             if (result == answer) {
-                "(correct)"
+                "correct"
             } else {
-                "(incorrect, expected $answer)"
+                "incorrect, expected $answer"
             }
         } else {
-            ""
+            null
         }
 
-        println("Part $number: $result $status".trim())
+        val resultWithStatus = if (status != null) "$result ($status)" else "$result"
+        println("Part $number: $resultWithStatus")
     }
 }
 

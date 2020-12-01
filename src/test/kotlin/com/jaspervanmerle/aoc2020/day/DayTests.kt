@@ -25,6 +25,6 @@ class DayTests {
 
     private fun createTest(day: Day, partNumber: Int, answer: Any?, solver: () -> Any): DynamicTest =
         DynamicTest.dynamicTest("Day ${day.number} Part $partNumber") {
-            Assertions.assertEquals(answer, solver());
+            Assertions.assertEquals(answer, solver())
         }
 }
