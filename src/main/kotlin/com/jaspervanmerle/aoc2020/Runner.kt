@@ -2,8 +2,6 @@ package com.jaspervanmerle.aoc2020
 
 import com.jaspervanmerle.aoc2020.day.Day
 import org.reflections.Reflections
-import java.text.DecimalFormat
-import kotlin.system.measureNanoTime
 
 class Runner {
     private val dayPackage = Day::class.java.packageName
@@ -31,23 +29,13 @@ class Runner {
     }
 
     private fun runPart(number: Int, solver: () -> Any) {
-        lateinit var result: Any
-
-        val solvingTime = measureNanoTime {
-            result = try {
-                solver()
-            } catch (err: NotImplementedError) {
-                "TODO"
-            }
+        val result = try {
+            solver()
+        } catch (err: NotImplementedError) {
+            "TODO"
         }
 
         println("Part $number: $result")
-
-        val df = DecimalFormat("#.#")
-        df.minimumFractionDigits = 2
-        df.maximumFractionDigits = 2
-
-        println("Time taken for part $number: ${df.format(solvingTime / 1e6)}ms")
     }
 }
 
