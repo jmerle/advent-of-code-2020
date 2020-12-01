@@ -6,18 +6,19 @@ import java.text.DecimalFormat
 import kotlin.system.measureNanoTime
 
 class Runner {
+    private val dayPackage = Day::class.java.packageName
+
     fun runDay(dayNumber: Int) {
-        val pkgName = Day::class.java.packageName
         val clsName = "Day${dayNumber.toString().padStart(2, '0')}"
-        val dayCls = Class.forName("$pkgName.$clsName")
+        val dayCls = Class.forName("$dayPackage.$clsName")
 
         run(dayCls.getConstructor().newInstance() as Day)
     }
 
     fun runLatestDay() {
-        val dayCls = Reflections(Day::class.java.packageName)
+        val dayCls = Reflections(dayPackage)
             .getSubTypesOf(Day::class.java)
-            .maxByOrNull { it.javaClass.simpleName }!!
+            .maxByOrNull { it.simpleName }!!
 
         run(dayCls.getConstructor().newInstance())
     }
