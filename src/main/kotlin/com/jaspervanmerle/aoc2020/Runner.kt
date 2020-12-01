@@ -35,7 +35,7 @@ object Runner {
             null
         }
 
-        val resultWithStatus = if (status != null) "$result ($status)" else "$result"
+        val resultWithStatus = if (status != null) "$result ($status)" else result
         println("Part $part: $resultWithStatus")
     }
 }
