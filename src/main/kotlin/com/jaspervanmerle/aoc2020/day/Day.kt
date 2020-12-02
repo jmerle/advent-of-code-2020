@@ -19,10 +19,9 @@ abstract class Day(private val answerPartOne: String? = null, private val answer
     protected abstract fun solvePartTwo(): Any
 
     protected fun getInput(): String {
-        return this::class.java
-            .getResourceAsStream("/input-${number.toString().padStart(2, '0')}.txt")
-            .bufferedReader()
-            .use { it.readText() }
+        return javaClass
+            .getResource("/input-${number.toString().padStart(2, '0')}.txt")
+            .readText()
             .trim()
     }
 }
