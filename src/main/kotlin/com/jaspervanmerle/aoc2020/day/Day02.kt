@@ -14,19 +14,7 @@ class Day02 : Day("396", "428") {
 
     override fun solvePartTwo(): Any {
         return entries
-            .count {
-                var occurrences = 0
-
-                if (it.password[it.left - 1] == it.character) {
-                    occurrences++
-                }
-
-                if (it.password[it.right - 1] == it.character) {
-                    occurrences++
-                }
-
-                occurrences == 1
-            }
+            .count { (it.password[it.left - 1] == it.character) xor (it.password[it.right - 1] == it.character) }
     }
 
     private fun parseEntry(line: String): Entry {
