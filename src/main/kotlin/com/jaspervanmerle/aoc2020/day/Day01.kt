@@ -1,5 +1,7 @@
 package com.jaspervanmerle.aoc2020.day
 
+import com.jaspervanmerle.aoc2020.ProblemImpossibleError
+
 class Day01 : Day("436404", "274879808") {
     private val entries = getInput()
         .lines()
@@ -14,7 +16,7 @@ class Day01 : Day("436404", "274879808") {
             }
         }
 
-        throw Error("Problem impossible")
+        throw ProblemImpossibleError()
     }
 
     override fun solvePartTwo(): Any {
@@ -28,6 +30,6 @@ class Day01 : Day("436404", "274879808") {
             }
         }
 
-        throw Error("Problem impossible")
+        throw ProblemImpossibleError()
     }
 }
