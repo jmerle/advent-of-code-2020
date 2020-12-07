@@ -1,7 +1,7 @@
 package com.jaspervanmerle.aoc2020.day
 
 class Day07 : Day("289", "30055") {
-    private data class Bag(val color: String, val contents: MutableMap<String, Int> = mutableMapOf()) {
+    private data class Bag(val color: String, val contents: Map<String, Int>) {
         fun contains(targetColor: String, bags: Map<String, Bag>): Boolean {
             return contents.keys.any { it == targetColor || bags.getValue(it).contains(targetColor, bags) }
         }
@@ -13,10 +13,8 @@ class Day07 : Day("289", "30055") {
 
     private val bags = getInput()
         .lines()
-        .fold(mutableMapOf<String, Bag>(), { acc, line ->
-            parseBag(line, acc)
-            acc
-        })
+        .map { parseBag(it) }
+        .associateBy { it.color }
 
     override fun solvePartOne(): Any {
         return bags.values.count { it.contains("shiny gold", bags) }
@@ -26,24 +24,19 @@ class Day07 : Day("289", "30055") {
         return bags.getValue("shiny gold").depth(bags)
     }
 
-    private fun parseBag(line: String, bags: MutableMap<String, Bag>) {
+    private fun parseBag(line: String): Bag {
         val color = line.substringBefore(" bags")
-        val bag = bags.getOrPut(color) { Bag(color) }
-
-        line
+        val contents = line
             .substringAfter("contain ")
             .substringBefore(".")
             .split(", ")
-            .forEach {
-                if (it == "no other bags") {
-                    return@forEach
-                }
-
+            .filter { it != "no other bags" }
+            .map {
                 val parts = it.split(" ")
-                val entryAmount = parts[0].toInt()
-                val entryColor = "${parts[1]} ${parts[2]}"
-
-                bag.contents[entryColor] = entryAmount
+                "${parts[1]} ${parts[2]}" to parts[0].toInt()
             }
+            .toMap()
+
+        return Bag(color, contents)
     }
 }
