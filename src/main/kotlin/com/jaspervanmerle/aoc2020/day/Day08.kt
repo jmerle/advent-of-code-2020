@@ -24,13 +24,13 @@ class Day08 : Day("1723", "846") {
                 when (instruction.operation) {
                     "acc" -> {
                         accumulator += instruction.argument
-                        currentInstruction += 1
+                        currentInstruction++
                     }
                     "jmp" -> {
                         currentInstruction += instruction.argument
                     }
                     "nop" -> {
-                        currentInstruction += 1
+                        currentInstruction++
                     }
                 }
             }
