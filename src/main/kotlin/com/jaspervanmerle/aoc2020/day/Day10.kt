@@ -9,30 +9,17 @@ class Day10 : Day("3000", "193434623148032") {
     private val device = adapters.last() + 3
 
     override fun solvePartOne(): Any {
-        var currentJolts = 0
-        var oneDiffs = 0
-        var threeDiffs = 0
+        val diffs = (listOf(0) + adapters + device)
+            .windowed(2)
+            .groupBy { window -> window[1] - window[0] }
 
-        for (adapter in adapters + device) {
-            val difference = adapter - currentJolts
-
-            when (difference) {
-                1 -> oneDiffs++
-                3 -> threeDiffs++
-            }
-
-            if (difference in 1..3) {
-                currentJolts = adapter
-            }
-        }
-
-        return oneDiffs * threeDiffs
+        return diffs[1]!!.size * diffs[3]!!.size
     }
 
     override fun solvePartTwo(): Any {
-        return (adapters + device)
+        return adapters
             .fold(mapOf(0 to 1L)) { options, joltage ->
                 options + (joltage to (1..3).sumOf { options[joltage - it] ?: 0 })
-            }[device]!!
+            }[adapters.last()]!!
     }
 }
