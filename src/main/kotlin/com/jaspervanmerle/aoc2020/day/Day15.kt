@@ -1,32 +1,31 @@
 package com.jaspervanmerle.aoc2020.day
 
 class Day15 : Day("981", "164878") {
-    private val startNumbers = getInput()
+    private val startingNumbers = getInput()
         .split(",")
         .map { it.toInt() }
 
     override fun solvePartOne(): Any {
-        return getNthNumberSpoken(2020)
+        return getSpokenNumber(2020)
     }
 
     override fun solvePartTwo(): Any {
-        return getNthNumberSpoken(30_000_000)
+        return getSpokenNumber(30_000_000)
     }
 
-    private fun getNthNumberSpoken(n: Int): Int {
+    private fun getSpokenNumber(n: Int): Int {
         val lastTurn = mutableMapOf<Int, Int>()
 
-        for (i in startNumbers.indices) {
-            lastTurn[startNumbers[i]] = i + 1
+        for (i in startingNumbers.indices) {
+            lastTurn[startingNumbers[i]] = i + 1
         }
 
-        var currentNumber = startNumbers.last()
+        var currentNumber = startingNumbers.last()
 
-        for (turn in startNumbers.size until n) {
-            val nextNumber = if (currentNumber in lastTurn) {
-                turn - lastTurn[currentNumber]!!
-            } else {
-                0
+        for (turn in startingNumbers.size until n) {
+            val nextNumber = when (currentNumber) {
+                in lastTurn -> turn - lastTurn[currentNumber]!!
+                else -> 0
             }
 
             lastTurn[currentNumber] = turn
