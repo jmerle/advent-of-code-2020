@@ -17,7 +17,7 @@ class Day18 : Day("654686398176", "8952864356993") {
         return getInput()
             .lines()
             .map { expression ->
-                val simplifiedExpression = replaceUntilDone(expression, parensRegex) {
+                val simplifiedExpression = replaceAll(expression, parensRegex) {
                     calculator(it.groups[1]!!.value).toString()
                 }
 
@@ -42,18 +42,18 @@ class Day18 : Day("654686398176", "8952864356993") {
     }
 
     private fun calculateAdvancedMath(expression: String): Long {
-        val addParsed = replaceUntilDone(expression, addRegex) {
+        val addParsed = replaceAll(expression, addRegex) {
             (it.groups[1]!!.value.toLong() + it.groups[2]!!.value.toLong()).toString()
         }
 
-        val multiplyParsed = replaceUntilDone(addParsed, multiplyRegex) {
+        val multiplyParsed = replaceAll(addParsed, multiplyRegex) {
             (it.groups[1]!!.value.toLong() * it.groups[2]!!.value.toLong()).toString()
         }
 
         return multiplyParsed.toLong()
     }
 
-    private fun replaceUntilDone(original: String, regex: Regex, replacer: (MatchResult) -> String): String {
+    private fun replaceAll(original: String, regex: Regex, replacer: (MatchResult) -> String): String {
         var current = original
 
         while (true) {
